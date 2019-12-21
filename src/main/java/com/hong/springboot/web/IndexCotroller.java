@@ -1,5 +1,6 @@
 package com.hong.springboot.web;
 
+import com.hong.springboot.config.auth.LoginUser;
 import com.hong.springboot.config.auth.dto.SessionUser;
 import com.hong.springboot.service.PostsService;
 import com.hong.springboot.web.dto.PostsResponseDto;
@@ -19,9 +20,8 @@ public class IndexCotroller {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user != null){
             model.addAttribute("userName", user.getName());
         }
